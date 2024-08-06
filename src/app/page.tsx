@@ -4,10 +4,22 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { api } from "@/lib/api"
 import { SearchIcon } from "lucide-react"
 import Image from "next/image"
+import BarberShopItem, {
+  BarberShopItemProps,
+} from "@/components/barber-shop-item"
 
-export default function Home() {
+async function fetchBarberShops() {
+  const barbershops = await api("/barbershops")
+  const data = await barbershops.json()
+  return data.barbershops
+}
+
+export default async function Home() {
+  const barbershops: BarberShopItemProps[] = await fetchBarberShops()
+
   return (
     <main>
       <Header />
@@ -31,9 +43,8 @@ export default function Home() {
           />
         </div>
 
-        <h2 className="mt-6 text-sm text-gray-400">AGENDAMENTOS</h2>
-
-        <Card className="mt-6">
+        <h2 className="mb-3 mt-6 text-sm text-gray-400">AGENDAMENTOS</h2>
+        <Card className="">
           <CardContent className="flex justify-between p-0">
             <div className="flex flex-col gap-2 py-5 pl-5">
               <Badge className="w-fit">Confirmado</Badge>
@@ -53,6 +64,14 @@ export default function Home() {
             </div>
           </CardContent>
         </Card>
+
+        <h2 className="mb-3 mt-6 text-sm text-gray-400">RECOMENDADOS</h2>
+
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {barbershops.map((barbershop) => (
+            <BarberShopItem key={barbershop.id} data={barbershop} />
+          ))}
+        </div>
       </div>
     </main>
   )
