@@ -23,6 +23,7 @@ export default async function Home() {
   return (
     <main>
       <Header />
+
       <div className="p-5">
         <h2 className="text-xl font-bold">Olá, Arthur</h2>
         <p>Segundo-feira, 05</p>
@@ -31,6 +32,48 @@ export default async function Home() {
           <Input placeholder="Faça sua busca" />
           <Button size={"icon"}>
             <SearchIcon />
+          </Button>
+        </div>
+
+        <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+          <Button className="gap-2" variant={"secondary"}>
+            <Image src="/cabelo.svg" alt="Cabelo" width={16} height={16} />
+            Cabelo
+          </Button>
+          <Button className="gap-2" variant={"secondary"}>
+            <Image src="/barba.svg" alt="Barba" width={16} height={16} />
+            Barba
+          </Button>
+          <Button className="gap-2" variant={"secondary"}>
+            <Image
+              src="/acabamento.svg"
+              alt="Acabamento"
+              width={16}
+              height={16}
+            />
+            Acabamento
+          </Button>
+          <Button className="gap-2" variant={"secondary"}>
+            <Image
+              src="/hidratacao.svg"
+              alt="Hidratação"
+              width={16}
+              height={16}
+            />
+            Hidratação
+          </Button>
+          <Button className="gap-2" variant={"secondary"}>
+            <Image
+              src="/sobrancelha.svg"
+              alt="Sobrancelha"
+              width={16}
+              height={16}
+            />
+            Sobrancelha
+          </Button>
+          <Button className="gap-2" variant={"secondary"}>
+            <Image src="/massagem.svg" alt="Massagem" width={16} height={16} />
+            Massagem
           </Button>
         </div>
 
@@ -72,7 +115,25 @@ export default async function Home() {
             <BarberShopItem key={barbershop.id} data={barbershop} />
           ))}
         </div>
+
+        <h2 className="mb-3 mt-6 text-sm text-gray-400">POPULARES</h2>
+
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {barbershops.map((barbershop) => (
+            <BarberShopItem key={barbershop.id} data={barbershop} />
+          ))}
+        </div>
       </div>
+
+      <footer>
+        <Card className="">
+          <CardContent className="px-5 py-6">
+            <p className="text-sm text-gray-400">
+              © 2023 Copyright <span className="font-bi">FSW Barber</span>
+            </p>
+          </CardContent>
+        </Card>
+      </footer>
     </main>
   )
 }
