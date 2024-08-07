@@ -1,7 +1,6 @@
 import { Header } from "@/components/header"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { api } from "@/lib/api"
 import { SearchIcon } from "lucide-react"
@@ -77,16 +76,6 @@ export default async function Home() {
           ))}
         </div>
       </div>
-
-      <footer>
-        <Card className="">
-          <CardContent className="px-5 py-6">
-            <p className="text-sm text-gray-400">
-              © 2023 Copyright <span className="font-bi">FSW Barber</span>
-            </p>
-          </CardContent>
-        </Card>
-      </footer>
     </main>
   )
 }

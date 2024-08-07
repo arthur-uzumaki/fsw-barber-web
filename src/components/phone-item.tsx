@@ -7,11 +7,11 @@ interface PhoneItemProps {
   phone: string
 }
 
-function handleCopyPhoneClick(phone: string) {
-  navigator.clipboard.writeText(phone)
-  toast.success("Telefone copiado com sucesso")
-}
 export function PhoneItem({ phone }: PhoneItemProps) {
+  function handleCopyPhoneClick(phone: string) {
+    navigator.clipboard.writeText(phone)
+    toast.success("Telefone copiado com sucesso")
+  }
   return (
     <div key={phone} className="flex justify-between">
       <div className="flex items-center gap-2 space-y-2">
