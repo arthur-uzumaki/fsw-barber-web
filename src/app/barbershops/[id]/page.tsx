@@ -1,4 +1,5 @@
 import { BarberShopItemProps } from "@/components/barber-shop-item"
+import { PhoneItem } from "@/components/phone-item"
 import { Service } from "@/components/service-item"
 import { Button } from "@/components/ui/button"
 import { api } from "@/lib/api"
@@ -81,13 +82,20 @@ export default async function BarberShpPage({ params }: BarberShopPageProps) {
         <p className="text-sm">{barbershop.description}</p>
       </div>
 
-      <div className="space-y-3 p-5">
+      <div className="space-y-3 border-b border-solid p-5">
         <h3 className="text-xs font-bold text-zinc-400">SERVIÇOS</h3>
         <div className="space-y-3">
           {barbershop.services?.map((service) => (
             <Service key={service.id} data={service} />
           ))}
         </div>
+      </div>
+
+      <div className="space-y-3 p-5">
+        <h3 className="text-xs font-bold text-zinc-400">CONTATO</h3>
+        {barbershop.phones.map((phone) => (
+          <PhoneItem key={phone} phone={phone} />
+        ))}
       </div>
     </main>
   )
