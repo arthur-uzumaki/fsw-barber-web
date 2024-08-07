@@ -1,4 +1,5 @@
 import { BarberShopItemProps } from "@/components/barber-shop-item"
+import { Service } from "@/components/service-item"
 import { Button } from "@/components/ui/button"
 import { api } from "@/lib/api"
 import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react"
@@ -64,20 +65,29 @@ export default async function BarberShpPage({ params }: BarberShopPageProps) {
 
       <div className="border-b border-solid p-5">
         <h1 className="mb-3 text-xl font-bold">{barbershop.name}</h1>
-        <div className="flex items-center gap-2 pb-2">
+        <div className="flex items-center gap-1 pb-2">
           <MapPinIcon className="text-primary" size={18} />
           <p className="text-sm">{barbershop.address}</p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <StarIcon className="fill-primary text-primary" size={18} />
           <p className="text-sm">5,0 (499 avaliação)</p>
         </div>
       </div>
 
-      <div className="border-b border-solid p-5">
-        <h3 className="mt-12 text-xs font-bold text-zinc-400">SOBRE NÓS</h3>
-        <p className="mt-3 text-justify text-sm">{barbershop.description}</p>
+      <div className="space-y-3 border-b border-solid p-5">
+        <h3 className="text-xs font-bold text-zinc-400">SOBRE NÓS</h3>
+        <p className="text-sm">{barbershop.description}</p>
+      </div>
+
+      <div className="space-y-3 p-5">
+        <h3 className="text-xs font-bold text-zinc-400">SERVIÇOS</h3>
+        <div className="space-y-3">
+          {barbershop.services?.map((service) => (
+            <Service key={service.id} data={service} />
+          ))}
+        </div>
       </div>
     </main>
   )

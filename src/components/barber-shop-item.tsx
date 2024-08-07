@@ -4,6 +4,7 @@ import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
 import { StarIcon } from "lucide-react"
 import Link from "next/link"
+import { Service } from "@/types/service"
 
 export interface BarberShopItemProps {
   id: string
@@ -14,6 +15,7 @@ export interface BarberShopItemProps {
   imageUrl: string
   createdAt: string
   updatedAt: string
+  services?: Service[]
 }
 
 interface BarberShopItemData {
