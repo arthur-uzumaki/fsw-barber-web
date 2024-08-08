@@ -19,11 +19,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-br" className="dark antialiased">
+    <html
+      lang="pt-br"
+      className="dark overflow-auto antialiased [&::-webkit-scrollbar]:hidden"
+    >
       <body className={inter.className}>
-        {children}
+        <div className="flex h-full flex-col">
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </div>
         <Toaster />
-        <Footer />
       </body>
     </html>
   )

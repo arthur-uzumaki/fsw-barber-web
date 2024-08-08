@@ -1,15 +1,15 @@
 import { Header } from "@/components/header"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { api } from "@/lib/api"
-import { SearchIcon } from "lucide-react"
 import Image from "next/image"
 import BarberShopItem, {
   BarberShopItemProps,
 } from "@/components/barber-shop-item"
 import { quickSearchOptions } from "./_constant/search"
 import { BookingItem } from "@/components/booking-item"
+import { getUser } from "@/lib/auth"
+import Search from "@/components/search"
 
 async function fetchBarberShops() {
   const barbershops = await api("/barbershops")
@@ -19,23 +19,20 @@ async function fetchBarberShops() {
 
 export default async function Home() {
   const barbershops: BarberShopItemProps[] = await fetchBarberShops()
-
+  const { name } = getUser()
   return (
     <main>
       <Header />
 
       <div className="p-5">
-        <h2 className="text-xl font-bold">Olá, Arthur</h2>
+        <h2 className="text-xl font-bold">Olá, {name}</h2>
         <p>Segundo-feira, 05</p>
 
-        <div className="mt-6 flex items-center gap-2">
-          <Input placeholder="Faça sua busca" />
-          <Button size={"icon"}>
-            <SearchIcon />
-          </Button>
+        <div className="mt-6">
+          <Search />
         </div>
 
-        <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+        <div className="mt-6 flex gap-3 overflow-x-scroll lg:overflow-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:hidden">
           {quickSearchOptions.map((option) => (
             <Button key={option.title} className="gap-2" variant={"secondary"}>
               <Image
