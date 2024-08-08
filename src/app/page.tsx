@@ -10,6 +10,7 @@ import { quickSearchOptions } from "./_constant/search"
 import { BookingItem } from "@/components/booking-item"
 import { getUser } from "@/lib/auth"
 import Search from "@/components/search"
+import Link from "next/link"
 
 async function fetchBarberShops() {
   const barbershops = await api("/barbershops")
@@ -34,14 +35,21 @@ export default async function Home() {
 
         <div className="mt-6 flex gap-3 overflow-x-scroll lg:overflow-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:hidden">
           {quickSearchOptions.map((option) => (
-            <Button key={option.title} className="gap-2" variant={"secondary"}>
-              <Image
-                src={option.imageUrl}
-                alt={option.title}
-                width={16}
-                height={16}
-              />
-              {option.title}
+            <Button
+              key={option.title}
+              className="gap-2"
+              variant={"secondary"}
+              asChild
+            >
+              <Link href={`/barbershops?service=${option.title}`}>
+                <Image
+                  src={option.imageUrl}
+                  alt={option.title}
+                  width={16}
+                  height={16}
+                />
+                {option.title}
+              </Link>
             </Button>
           ))}
         </div>

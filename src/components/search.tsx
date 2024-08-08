@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-  search: z.string().trim().min(1, "Digite algo pra buscar"),
+  title: z.string().trim().min(1, "Digite algo pra buscar"),
 })
 
 export default function Search() {
@@ -18,12 +18,12 @@ export default function Search() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      search: "",
+      title: "",
     },
   })
 
   function handleSubmit(data: z.infer<typeof formSchema>) {
-    route.push(`/barbershops?search=${data.search}`)
+    route.push(`/barbershops?title=${data.title}`)
   }
 
   return (
@@ -31,7 +31,7 @@ export default function Search() {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-2">
         <FormField
           control={form.control}
-          name="search"
+          name="title"
           render={({ field }) => (
             <FormItem className="w-full">
               <FormControl>

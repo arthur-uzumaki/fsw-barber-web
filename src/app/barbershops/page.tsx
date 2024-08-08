@@ -7,13 +7,25 @@ import { api } from "@/lib/api"
 
 interface BarberShopPageProps {
   searchParams: {
-    search: string
+    title?: string
+    service?: string
   }
 }
 
-async function searchBarbeShop(search: string) {
-  const response = await api(`search-barbershops?search=${search}`)
+async function searchBarbeShop(title?: string, service?: string) {
+  const queryParams = new URLSearchParams()
+
+  if (title) {
+    queryParams.append("title", title)
+  }
+
+  if (service) {
+    queryParams.append("service", service)
+  }
+  const response = await api(`search-barbershops?${queryParams.toString()}`)
   const data = await response.json()
+
+  console.log(data)
 
   return data.barberShops
 }
@@ -22,8 +34,11 @@ export default async function BarberShopPage({
   searchParams,
 }: BarberShopPageProps) {
   const barberShops: BarberShopItemProps[] = await searchBarbeShop(
-    searchParams.search,
+    searchParams.title,
+    searchParams.service,
   )
+
+  console.log(barberShops)
 
   return (
     <div>
@@ -33,7 +48,7 @@ export default async function BarberShopPage({
       </div>
       <div className="px-5">
         <h2 className="up mb-3 mt-6 text-xs font-bold text-zinc-400">
-          Resultado para &quot;{searchParams.search}
+          Resultado para &quot;{searchParams?.title || searchParams?.service}
           &quot;
         </h2>
 
