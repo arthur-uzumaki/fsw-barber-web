@@ -1,5 +1,7 @@
 import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+
 interface User {
   sub: string
   name: string
@@ -7,13 +9,20 @@ interface User {
   email: string
 }
 
-export function getUser(): User {
+export function getUser(): User | null {
   const token = cookies().get('token')?.value
+
   if (!token) {
-    throw new Error('Unauthenticated.')
+    redirect('/')
+    return null
   }
 
-  const user: User = jwtDecode(token)
-
-  return user
+  try {
+    const user: User = jwtDecode(token)
+    return user
+  } catch (error) {
+    console.error('Erro ao decodificar o token:', error)
+    redirect('/')
+    return null
+  }
 }
