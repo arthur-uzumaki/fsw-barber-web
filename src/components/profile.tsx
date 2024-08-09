@@ -1,5 +1,5 @@
-import { getUser } from "@/lib/auth"
-import { Avatar, AvatarImage } from "./ui/avatar"
+import { getUser } from '@/lib/auth'
+import { Avatar, AvatarImage } from './ui/avatar'
 
 export function Profile() {
   const { avatar_url, email, name } = getUser()

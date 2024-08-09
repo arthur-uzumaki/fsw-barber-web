@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import { SearchIcon } from "lucide-react"
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
-import { useRouter } from "next/navigation"
+import { SearchIcon } from 'lucide-react'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
-  title: z.string().trim().min(1, "Digite algo pra buscar"),
+  title: z.string().trim().min(1, 'Digite algo pra buscar'),
 })
 
 export default function Search() {
@@ -18,7 +18,7 @@ export default function Search() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
+      title: '',
     },
   })
 
@@ -41,7 +41,7 @@ export default function Search() {
             </FormItem>
           )}
         />
-        <Button size={"icon"} type="submit">
+        <Button size={'icon'} type="submit">
           <SearchIcon />
         </Button>
       </form>

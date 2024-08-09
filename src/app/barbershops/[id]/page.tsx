@@ -1,14 +1,14 @@
-import { BarberShopItemProps } from "@/components/barber-shop-item"
-import { PhoneItem } from "@/components/phone-item"
-import { Service } from "@/components/service-item"
-import { SidebarSheet } from "@/components/sidebar-sheet"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { api } from "@/lib/api"
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react"
-import { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
+import { BarberShopItemProps } from '@/components/barber-shop-item'
+import { PhoneItem } from '@/components/phone-item'
+import { Service } from '@/components/service-item'
+import { SidebarSheet } from '@/components/sidebar-sheet'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetTrigger } from '@/components/ui/sheet'
+import { api } from '@/lib/api'
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from 'lucide-react'
+import { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface BarberShopPageProps {
   params: {
@@ -17,7 +17,11 @@ interface BarberShopPageProps {
 }
 
 async function getBarbeShopDetails(id: string) {
-  const response = await api(`/barbershops/${id}`)
+  const response = await api(`/barbershops/${id}`, {
+    next: {
+      revalidate: 60 * 60 * 1,
+    },
+  })
   const data = await response.json()
 
   return data.barbershop
@@ -30,6 +34,17 @@ export async function generateMetadata({
   return {
     title: barbershop.name,
   }
+}
+
+export async function generateStaticParams() {
+  const response = await api('/barbershops')
+  const data = await response.json()
+
+  return data.barbershops.map((barbershop: BarberShopItemProps) => {
+    return {
+      id: barbershop.id,
+    }
+  })
 }
 
 export default async function BarberShpPage({ params }: BarberShopPageProps) {
@@ -48,10 +63,10 @@ export default async function BarberShpPage({ params }: BarberShopPageProps) {
         <Button
           asChild
           className="absolute left-4 top-4"
-          size={"icon"}
-          variant={"secondary"}
+          size={'icon'}
+          variant={'secondary'}
         >
-          <Link href={"/"}>
+          <Link href={'/'}>
             <ChevronLeftIcon />
           </Link>
         </Button>
@@ -60,8 +75,8 @@ export default async function BarberShpPage({ params }: BarberShopPageProps) {
           <SheetTrigger asChild>
             <Button
               className="absolute right-4 top-4"
-              size={"icon"}
-              variant={"secondary"}
+              size={'icon'}
+              variant={'secondary'}
             >
               <MenuIcon />
             </Button>

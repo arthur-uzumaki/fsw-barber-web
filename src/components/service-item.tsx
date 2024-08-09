@@ -1,7 +1,7 @@
-import { Service as ServiceBarber } from "@/types/service"
-import Image from "next/image"
-import { Button } from "./ui/button"
-import { Card, CardContent } from "./ui/card"
+import { Service as ServiceBarber } from '@/types/service'
+import Image from 'next/image'
+import { Button } from './ui/button'
+import { Card, CardContent } from './ui/card'
 
 interface ServiceProps {
   data: ServiceBarber
@@ -25,12 +25,12 @@ export function Service({ data }: ServiceProps) {
           <p className="text-sm text-gray-400">{data.description}</p>
           <div className="flex items-center justify-between">
             <p className="text-sm font-bold text-primary">
-              {Intl.NumberFormat("pt-br", {
-                style: "currency",
-                currency: "BRL",
+              {Intl.NumberFormat('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
               }).format(data.price)}
             </p>
-            <Button variant={"secondary"} size={"sm"}>
+            <Button variant={'secondary'} size={'sm'}>
               Reservar
             </Button>
           </div>

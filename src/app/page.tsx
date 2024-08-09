@@ -1,19 +1,19 @@
-import { Header } from "@/components/header"
+import { Header } from '@/components/header'
 
-import { Button } from "@/components/ui/button"
-import { api } from "@/lib/api"
-import Image from "next/image"
+import { Button } from '@/components/ui/button'
+import { api } from '@/lib/api'
+import Image from 'next/image'
 import BarberShopItem, {
   BarberShopItemProps,
-} from "@/components/barber-shop-item"
-import { quickSearchOptions } from "./_constant/search"
-import { BookingItem } from "@/components/booking-item"
-import { getUser } from "@/lib/auth"
-import Search from "@/components/search"
-import Link from "next/link"
+} from '@/components/barber-shop-item'
+import { quickSearchOptions } from './_constant/search'
+import { BookingItem } from '@/components/booking-item'
+import { getUser } from '@/lib/auth'
+import Search from '@/components/search'
+import Link from 'next/link'
 
 async function fetchBarberShops() {
-  const barbershops = await api("/barbershops")
+  const barbershops = await api('/barbershops')
   const data = await barbershops.json()
   return data.barbershops
 }
@@ -38,7 +38,7 @@ export default async function Home() {
             <Button
               key={option.title}
               className="gap-2"
-              variant={"secondary"}
+              variant={'secondary'}
               asChild
             >
               <Link href={`/barbershops?service=${option.title}`}>

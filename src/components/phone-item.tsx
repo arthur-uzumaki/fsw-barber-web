@@ -1,7 +1,7 @@
-"use client"
-import { SmartphoneIcon } from "lucide-react"
-import { Button } from "./ui/button"
-import { toast } from "sonner"
+'use client'
+import { SmartphoneIcon } from 'lucide-react'
+import { Button } from './ui/button'
+import { toast } from 'sonner'
 
 interface PhoneItemProps {
   phone: string
@@ -10,7 +10,7 @@ interface PhoneItemProps {
 export function PhoneItem({ phone }: PhoneItemProps) {
   function handleCopyPhoneClick(phone: string) {
     navigator.clipboard.writeText(phone)
-    toast.success("Telefone copiado com sucesso")
+    toast.success('Telefone copiado com sucesso')
   }
   return (
     <div key={phone} className="flex justify-between">
@@ -20,8 +20,8 @@ export function PhoneItem({ phone }: PhoneItemProps) {
       </div>
 
       <Button
-        variant={"outline"}
-        size={"sm"}
+        variant={'outline'}
+        size={'sm'}
         onClick={() => handleCopyPhoneClick(phone)}
       >
         Copiar

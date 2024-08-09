@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "./ui/badge"
-import { Avatar, AvatarImage } from "./ui/avatar"
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from './ui/badge'
+import { Avatar, AvatarImage } from './ui/avatar'
 
 export function BookingItem() {
   return (

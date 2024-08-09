@@ -1,10 +1,10 @@
-import Image from "next/image"
-import { Card, CardContent } from "./ui/card"
-import { Button } from "./ui/button"
-import { Badge } from "./ui/badge"
-import { StarIcon } from "lucide-react"
-import Link from "next/link"
-import { Service } from "@/types/service"
+import Image from 'next/image'
+import { Card, CardContent } from './ui/card'
+import { Button } from './ui/button'
+import { Badge } from './ui/badge'
+import { StarIcon } from 'lucide-react'
+import Link from 'next/link'
+import { Service } from '@/types/service'
 
 export interface BarberShopItemProps {
   id: string
@@ -36,7 +36,7 @@ export default function BarberShopItem({ data }: BarberShopItemData) {
           />
           <Badge
             className="absolute left-2 top-2 space-x-1"
-            variant={"secondary"}
+            variant={'secondary'}
           >
             <StarIcon className="h-4 w-3 fill-primary text-primary" />
             <p className="text-xs font-semibold">5.0</p>
@@ -47,7 +47,7 @@ export default function BarberShopItem({ data }: BarberShopItemData) {
           <h3 className="truncate font-semibold">{data.name}</h3>
 
           <p className="truncate text-sm text-gray-400">{data.address}</p>
-          <Button asChild className="mt-3 w-full" variant={"secondary"}>
+          <Button asChild className="mt-3 w-full" variant={'secondary'}>
             <Link href={`/barbershops/${data.id}`}>Reservar</Link>
           </Button>
         </div>

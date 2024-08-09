@@ -1,9 +1,9 @@
 import BarberShopItem, {
   BarberShopItemProps,
-} from "@/components/barber-shop-item"
-import { Header } from "@/components/header"
-import Search from "@/components/search"
-import { api } from "@/lib/api"
+} from '@/components/barber-shop-item'
+import { Header } from '@/components/header'
+import Search from '@/components/search'
+import { api } from '@/lib/api'
 
 interface BarberShopPageProps {
   searchParams: {
@@ -16,11 +16,11 @@ async function searchBarbeShop(title?: string, service?: string) {
   const queryParams = new URLSearchParams()
 
   if (title) {
-    queryParams.append("title", title)
+    queryParams.append('title', title)
   }
 
   if (service) {
-    queryParams.append("service", service)
+    queryParams.append('service', service)
   }
   const response = await api(`search-barbershops?${queryParams.toString()}`)
   const data = await response.json()

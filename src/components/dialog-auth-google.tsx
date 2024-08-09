@@ -1,5 +1,5 @@
-import { LogInIcon } from "lucide-react"
-import { Button } from "./ui/button"
+import { LogInIcon } from 'lucide-react'
+import { Button } from './ui/button'
 import {
   Dialog,
   DialogContent,
@@ -7,15 +7,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog"
-import { env } from "@/env/env"
-import Image from "next/image"
-import Link from "next/link"
+} from './ui/dialog'
+import { env } from '@/env/env'
+import Image from 'next/image'
+import Link from 'next/link'
 export function DialogAuthGoogle() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size={"icon"} variant={"link"}>
+        <Button size={'icon'} variant={'link'}>
           <LogInIcon size={20} />
         </Button>
       </DialogTrigger>
@@ -27,10 +27,10 @@ export function DialogAuthGoogle() {
           </DialogDescription>
         </DialogHeader>
 
-        <Button variant={"outline"} className="gap-2">
+        <Button variant={'outline'} className="gap-2">
           <Image
             alt="Fazer login com google"
-            src={"/google.svg"}
+            src={'/google.svg'}
             width={18}
             height={18}
           />

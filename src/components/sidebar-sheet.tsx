@@ -1,16 +1,16 @@
-import Link from "next/link"
-import { Button } from "./ui/button"
-import { SheetClose, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet"
-import { CalendarIcon, HomeIcon, LogOutIcon } from "lucide-react"
-import { quickSearchOptions } from "@/app/_constant/search"
-import Image from "next/image"
+import Link from 'next/link'
+import { Button } from './ui/button'
+import { SheetClose, SheetContent, SheetHeader, SheetTitle } from './ui/sheet'
+import { CalendarIcon, HomeIcon, LogOutIcon } from 'lucide-react'
+import { quickSearchOptions } from '@/app/_constant/search'
+import Image from 'next/image'
 
-import { cookies } from "next/headers"
-import { Profile } from "./profile"
-import { DialogAuthGoogle } from "./dialog-auth-google"
+import { cookies } from 'next/headers'
+import { Profile } from './profile'
+import { DialogAuthGoogle } from './dialog-auth-google'
 
 export function SidebarSheet() {
-  const token = cookies().get("token")?.value
+  const token = cookies().get('token')?.value
 
   return (
     <SheetContent>
@@ -30,14 +30,14 @@ export function SidebarSheet() {
 
       <div className="flex flex-col gap-4 border-b border-solid p-5 py-5">
         <SheetClose asChild>
-          <Button variant={"ghost"} className="justify-start gap-2" asChild>
-            <Link href={"/"}>
+          <Button variant={'ghost'} className="justify-start gap-2" asChild>
+            <Link href={'/'}>
               <HomeIcon size={18} />
               Inicio
             </Link>
           </Button>
         </SheetClose>
-        <Button variant={"ghost"} className="justify-start gap-2">
+        <Button variant={'ghost'} className="justify-start gap-2">
           <CalendarIcon size={18} />
           Agendamentos
         </Button>
@@ -46,7 +46,7 @@ export function SidebarSheet() {
       <div className="flex flex-col gap-4 border-b border-solid p-5 py-5">
         {quickSearchOptions.map((option) => (
           <SheetClose asChild key={option.title}>
-            <Button className="justify-start gap-2" variant={"ghost"} asChild>
+            <Button className="justify-start gap-2" variant={'ghost'} asChild>
               <Link href={`/barbershops?service=${option.title}`}>
                 <Image
                   alt={option.title}
@@ -59,16 +59,16 @@ export function SidebarSheet() {
             </Button>
           </SheetClose>
         ))}
-        <Button variant={"ghost"} className="justify-start gap-2">
+        <Button variant={'ghost'} className="justify-start gap-2">
           <CalendarIcon size={18} />
           Agendamentos
         </Button>
       </div>
 
       <div className="flex flex-col gap-4 p-5 py-5">
-        <Button variant={"ghost"} className="justify-start gap-2">
+        <Button variant={'ghost'} className="justify-start gap-2">
           <LogOutIcon size={18} />
-          <Link href={"/api/auth/logout"}>Sai da conta</Link>
+          <Link href={'/api/auth/logout'}>Sai da conta</Link>
         </Button>
       </div>
     </SheetContent>
