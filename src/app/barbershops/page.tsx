@@ -25,8 +25,6 @@ async function searchBarbeShop(title?: string, service?: string) {
   const response = await api(`search-barbershops?${queryParams.toString()}`)
   const data = await response.json()
 
-  console.log(data)
-
   return data.barberShops
 }
 

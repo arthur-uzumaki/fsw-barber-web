@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { SheetClose, SheetContent, SheetHeader, SheetTitle } from './ui/sheet'
-import { CalendarIcon, HomeIcon, LogOutIcon } from 'lucide-react'
+import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from 'lucide-react'
 import { quickSearchOptions } from '@/app/_constant/search'
 import Image from 'next/image'
 
 import { cookies } from 'next/headers'
 import { Profile } from './profile'
 import { DialogAuthGoogle } from './dialog-auth-google'
+import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 
 export function SidebarSheet() {
   const token = cookies().get('token')?.value
@@ -22,7 +23,16 @@ export function SidebarSheet() {
         <div className="flex items-center justify-between gap-3 border-b border-solid p-5">
           <h2 className="font-bold">Olá, faça seu login</h2>
 
-          <DialogAuthGoogle />
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant={'link'} size="icon">
+                <LogInIcon />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-[90%]">
+              <DialogAuthGoogle />
+            </DialogContent>
+          </Dialog>
         </div>
       ) : (
         <Profile />

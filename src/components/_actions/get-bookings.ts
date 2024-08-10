@@ -10,9 +10,6 @@ interface GetBookingsProps {
 export async function getBookings({ date, serviceId }: GetBookingsProps) {
   const response = await api(
     `/bookings/${serviceId}?date=${date.toISOString()}`,
-    {
-      cache: 'no-store',
-    },
   )
 
   if (!response.ok) {

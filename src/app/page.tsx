@@ -11,6 +11,7 @@ import { BookingItem } from '@/components/booking-item'
 import { getUser } from '@/lib/auth'
 import Search from '@/components/search'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 async function fetchBarberShops() {
   const barbershops = await api('/barbershops')
@@ -20,13 +21,13 @@ async function fetchBarberShops() {
 
 export default async function Home() {
   const barbershops: BarberShopItemProps[] = await fetchBarberShops()
-  const { name } = getUser()
+
   return (
     <main>
       <Header />
 
       <div className="p-5">
-        <h2 className="text-xl font-bold">Olá, {name}</h2>
+        <h2 className="text-xl font-bold">Olá, Arthur Sousa</h2>
         <p>Segundo-feira, 05</p>
 
         <div className="mt-6">

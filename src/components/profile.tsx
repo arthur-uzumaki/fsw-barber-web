@@ -2,9 +2,13 @@ import { getUser } from '@/lib/auth'
 import { Avatar, AvatarImage } from './ui/avatar'
 
 export function Profile() {
-  const { avatar_url, email, name } = getUser()
-  console.log(avatar_url)
+  const user = getUser()
 
+  if (!user) {
+    return <div>Usuário não encontrado</div>
+  }
+
+  const { avatar_url, email, name } = user
   return (
     <div className="flex items-center gap-3 border-b border-solid p-5">
       <Avatar>

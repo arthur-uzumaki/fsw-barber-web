@@ -13,16 +13,9 @@ export function getUser(): User | null {
   const token = cookies().get('token')?.value
 
   if (!token) {
-    redirect('/')
     return null
   }
 
-  try {
-    const user: User = jwtDecode(token)
-    return user
-  } catch (error) {
-    console.error('Erro ao decodificar o token:', error)
-    redirect('/')
-    return null
-  }
+  const user: User = jwtDecode(token)
+  return user
 }
