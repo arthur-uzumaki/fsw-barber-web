@@ -15,11 +15,13 @@ import {
 import { Calendar } from './ui/calendar'
 
 import { ptBR } from 'date-fns/locale'
-import { useState } from 'react'
-import { format, set } from 'date-fns'
+import { useEffect, useState } from 'react'
+import { addDays, format, set } from 'date-fns'
 import { BarberShopItemProps } from './barber-shop-item'
 import { toast } from 'sonner'
-import { createBooking } from './_actions/create-booking'
+import { createBooking } from '@/_actions/create-booking'
+import { Booking } from '@/types/booking'
+import { getBookings } from '@/_actions/get-bookings'
 
 interface ServiceProps {
   data: ServiceBarber
@@ -49,15 +51,63 @@ const TIME_LIST = [
   '17:30',
   '18:00',
 ]
+function getTimeList(bookings: Booking[]) {
+  return TIME_LIST.filter((time) => {
+    const hour = Number(time.split(':')[0])
+    const minutes = Number(time.split(':')[1])
+
+    const hasBookingOnCurrentTime = bookings.some((booking) => {
+      const bookingDate = new Date(booking.date)
+      return (
+        bookingDate.getHours() === hour && bookingDate.getMinutes() === minutes
+      )
+    })
+
+    if (hasBookingOnCurrentTime) {
+      return false
+    }
+    return true
+  })
+}
 
 export function Service({ data, barberShop }: ServiceProps) {
-  const [selectedDay, setSetSelectedDay] = useState<Date | undefined>(undefined)
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
   )
+  const [dayBookings, setDayBookings] = useState<Booking[]>([])
+  const [bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false)
+
+  useEffect(() => {
+    async function fetchBookings() {
+      if (!selectedDay) {
+        return
+      }
+
+      const bookings = await getBookings({
+        date: selectedDay,
+        serviceId: data.id,
+      })
+
+      setDayBookings(bookings)
+    }
+
+    fetchBookings()
+  }, [selectedDay, data.id])
+
+  function handleBookingClick() {
+    return setBookingSheetIsOpen(true)
+  }
+
+  function handleBookingSheetOpenChange() {
+    setSelectedDay(undefined)
+    setSelectedTime(undefined)
+    setDayBookings([])
+    setBookingSheetIsOpen(false)
+  }
 
   function handleDateSelect(date: Date | undefined) {
-    setSetSelectedDay(date)
+    setSelectedDay(date)
   }
 
   function handleTimeSelect(time: string) {
@@ -113,12 +163,18 @@ export function Service({ data, barberShop }: ServiceProps) {
               }).format(data.price)}
             </p>
 
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant={'secondary'} size={'sm'}>
-                  Reservar
-                </Button>
-              </SheetTrigger>
+            <Sheet
+              open={bookingSheetIsOpen}
+              onOpenChange={handleBookingSheetOpenChange}
+            >
+              <Button
+                variant={'secondary'}
+                size={'sm'}
+                onClick={handleBookingClick}
+              >
+                Reservar
+              </Button>
+
               <SheetContent className="px-0">
                 <SheetHeader>
                   <SheetTitle>Fazer Reserva</SheetTitle>
@@ -130,6 +186,7 @@ export function Service({ data, barberShop }: ServiceProps) {
                     locale={ptBR}
                     selected={selectedDay}
                     onSelect={handleDateSelect}
+                    fromDate={new Date()}
                     styles={{
                       head_cell: {
                         width: '100%',
@@ -157,7 +214,7 @@ export function Service({ data, barberShop }: ServiceProps) {
                 </div>
                 {selectedDay && (
                   <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 px-5 [&::-webkit-scrollbar]:hidden">
-                    {TIME_LIST.map((time) => (
+                    {getTimeList(dayBookings).map((time) => (
                       <Button
                         key={time}
                         variant={selectedTime === time ? 'default' : 'outline'}
@@ -208,11 +265,9 @@ export function Service({ data, barberShop }: ServiceProps) {
                 )}
 
                 <SheetFooter className="mt-5 px-5">
-                  <SheetClose asChild>
-                    {selectedDay && selectedTime && (
-                      <Button onClick={handleCreateBooking}>Confirmar</Button>
-                    )}
-                  </SheetClose>
+                  {selectedDay && selectedTime && (
+                    <Button onClick={handleCreateBooking}>Confirmar</Button>
+                  )}
                 </SheetFooter>
               </SheetContent>
             </Sheet>
