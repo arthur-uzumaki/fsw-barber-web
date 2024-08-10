@@ -75,12 +75,14 @@ export function SidebarSheet() {
         </Button>
       </div>
 
-      <div className="flex flex-col gap-4 p-5 py-5">
-        <Button variant={'ghost'} className="justify-start gap-2">
-          <LogOutIcon size={18} />
-          <Link href={'/api/auth/logout'}>Sai da conta</Link>
-        </Button>
-      </div>
+      {token && (
+        <div className="flex flex-col gap-4 p-5 py-5">
+          <Button variant={'ghost'} className="justify-start gap-2">
+            <LogOutIcon size={18} />
+            <Link href={'/api/auth/logout'}>Sai da conta</Link>
+          </Button>
+        </div>
+      )}
     </SheetContent>
   )
 }
