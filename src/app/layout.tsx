@@ -23,13 +23,7 @@ export default function RootLayout({
       lang="pt-br"
       className="dark overflow-auto antialiased [&::-webkit-scrollbar]:hidden"
     >
-      <body className={inter.className}>
-        <div className="flex h-full flex-col">
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </div>
-        <Toaster />
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }

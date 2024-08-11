@@ -6,7 +6,7 @@ import Image from 'next/image'
 import BarberShopItem, {
   BarberShopItemProps,
 } from '@/components/barber-shop-item'
-import { quickSearchOptions } from './_constant/search'
+import { quickSearchOptions } from '@/app/_constant/search'
 import { BookingItem } from '@/components/booking-item'
 import { getUser } from '@/lib/auth'
 import Search from '@/components/search'
