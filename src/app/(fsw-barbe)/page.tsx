@@ -14,6 +14,8 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { Booking } from '@/types/booking'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 async function fetchBarberShops() {
   const barbershops = await api('/barbershops')
@@ -51,8 +53,16 @@ export default async function Home() {
       <Header />
 
       <div className="p-5">
-        <h2 className="text-xl font-bold">Olá, {name}</h2>
-        <p>Segundo-feira, 05</p>
+        <h2 className="text-xl font-bold">Olá, {name.split(' ')[0]}</h2>
+        <p>
+          <span className="capitalize">
+            {format(new Date(), 'EEEE, dd', { locale: ptBR })}
+          </span>
+          <span>&nbsp;de&nbsp;</span>
+          <span className="capitalize">
+            {format(new Date(), 'MMMM', { locale: ptBR })}
+          </span>
+        </p>
 
         <div className="mt-6">
           <Search />
