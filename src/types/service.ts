@@ -7,5 +7,5 @@ export interface Service {
   imageUrl: string
   price: number
   barbershopId: string
-  baberShop: BarberShop
+  barbershop: BarberShop
 }

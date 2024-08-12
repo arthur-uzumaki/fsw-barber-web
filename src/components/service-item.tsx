@@ -21,10 +21,11 @@ import { createBooking } from '@/components/_actions/create-booking'
 import { Booking } from '@/types/booking'
 import { getBookings } from '@/components/_actions/get-bookings'
 import Cookies from 'js-cookie'
+import { BookingSummary } from './booking-smmary'
 
 interface ServiceProps {
   data: ServiceBarber
-  barberShop: Pick<BarberShopItemProps, 'name'>
+  barberShop: BarberShopItemProps
 }
 
 const TIME_LIST = [
@@ -234,38 +235,12 @@ export function ServiceItem({ data, barberShop }: ServiceProps) {
 
                   {selectedTime && selectedDay && (
                     <div className="p-5">
-                      <Card>
-                        <CardContent className="space-y-3 p-3">
-                          <div className="flex items-center justify-between">
-                            <h2 className="font-bold">{data.name}</h2>
-                            <p className="font-bold">
-                              {Intl.NumberFormat('pt-br', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              }).format(data.price)}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Data</h2>
-                            <p className="font-bold">
-                              {format(selectedDay, "d 'de' MMMM", {
-                                locale: ptBR,
-                              })}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Horário</h2>
-                            <p className="font-bold">{selectedTime}</p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Barbearia</h2>
-                            <p className="font-bold">{barberShop.name}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <BookingSummary
+                        name={barberShop.name}
+                        price={data.price}
+                        selectedDay={selectedDay}
+                        selectedTime={selectedTime}
+                      />
                     </div>
                   )}
 
