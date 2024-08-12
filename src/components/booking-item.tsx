@@ -1,3 +1,5 @@
+'use client'
+
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from './ui/badge'
 import { Avatar, AvatarImage } from './ui/avatar'
@@ -6,14 +8,29 @@ import { format, isFuture } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import {
   Sheet,
+  SheetClose,
   SheetContent,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet'
 import Image from 'next/image'
-import { BookingSummary } from './booking-smmary'
+import { BookingSummary } from './booking-summary'
 import { PhoneItem } from './phone-item'
+import { Button } from './ui/button'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './ui/dialog'
+import { deleteBooking } from '@/_actions/delete-booking'
+import { toast } from 'sonner'
 
 interface BookingItemProps {
   data: Booking
@@ -21,6 +38,15 @@ interface BookingItemProps {
 
 export function BookingItem({ data }: BookingItemProps) {
   const isConfirmed = isFuture(data.date)
+
+  async function handleDeleteBooking() {
+    try {
+      await deleteBooking(data.id)
+      toast.success('Reserva cancelado com sucesso! ')
+    } catch (error) {
+      toast.error('Error ao cancelar a reservar. Tenta de novo')
+    }
+  }
   return (
     <Sheet>
       <SheetTrigger className="w-full">
@@ -33,7 +59,7 @@ export function BookingItem({ data }: BookingItemProps) {
               >
                 {isConfirmed ? 'Confirmado' : 'Finalizado'}
               </Badge>
-              <h3 className="font-semibold">{data.service.name}</h3>
+              <h3 className="text-left font-semibold">{data.service.name}</h3>
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
                   <AvatarImage src={data.barbershop.imageUrl} />
@@ -93,7 +119,7 @@ export function BookingItem({ data }: BookingItemProps) {
             {isConfirmed ? 'Confirmado' : 'Finalizado'}
           </Badge>
         </div>
-        <div className="mb-6 mt-3">
+        <div className="mb-6 mt-4">
           <BookingSummary
             name={data.barbershop.name}
             price={data.service.price}
@@ -107,6 +133,50 @@ export function BookingItem({ data }: BookingItemProps) {
             <PhoneItem key={index} phone={phone} />
           ))}
         </div>
+        <SheetFooter className="mt-6">
+          <div className="flex items-center gap-3">
+            <SheetClose asChild>
+              <Button variant={'outline'} className="w-full">
+                Voltar
+              </Button>
+            </SheetClose>
+            {isConfirmed && (
+              <Dialog>
+                <DialogTrigger>
+                  <Button variant={'destructive'} className="w-full">
+                    Cancelar
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[90%]">
+                  <DialogHeader>
+                    <DialogTitle>Cancelar Reserva</DialogTitle>
+                    <DialogDescription className="text-zinc-500">
+                      Tem certeza que deseja cancelar esse agendamento?
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <DialogFooter className="flex-row gap-5">
+                    <DialogClose asChild className="">
+                      <Button variant={'outline'} className="w-full">
+                        Voltar
+                      </Button>
+                    </DialogClose>
+                    <DialogClose asChild>
+                      <Button
+                        variant={'destructive'}
+                        className="w-full"
+                        type="button"
+                        onClick={handleDeleteBooking}
+                      >
+                        Confirmar
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            )}
+          </div>
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   )

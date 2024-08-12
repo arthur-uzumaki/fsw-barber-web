@@ -37,8 +37,6 @@ async function fetchConcludedBookings() {
 }
 
 export default async function Bookings() {
-  const token = cookies().get('token')?.value
-
   const closedBookings: Booking[] = await fetchConcludedBookings()
   const confirmedBookings: Booking[] = await fetchConfirmedBookings()
 

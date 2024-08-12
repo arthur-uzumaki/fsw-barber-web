@@ -1,6 +1,7 @@
 'use server'
 
 import { api } from '@/lib/api'
+import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
 interface CreateBookingParam {
@@ -26,5 +27,6 @@ export async function createBooking({ date, serviceId }: CreateBookingParam) {
   })
 
   const data = response.json()
+  revalidatePath('/bookings')
   return data
 }
