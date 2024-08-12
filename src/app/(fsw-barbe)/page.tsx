@@ -13,15 +13,33 @@ import Search from '@/components/search'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
+import { Booking } from '@/types/booking'
 
 async function fetchBarberShops() {
   const barbershops = await api('/barbershops')
   const data = await barbershops.json()
   return data.barbershops
 }
+async function fetchBookingsUser() {
+  const token = cookies().get('token')?.value
+  const response = await api('/bookings', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    next: {
+      revalidate: 60 * 60 * 30,
+    },
+  })
+  const data = await response.json()
+
+  return data.bookings
+}
 
 export default async function Home() {
   const barbershops: BarberShopItemProps[] = await fetchBarberShops()
+
+  const bookings: Booking[] = await fetchBookingsUser()
+
   const token = cookies().get('token')?.value
   const { name } = getUser()
 
@@ -69,9 +87,12 @@ export default async function Home() {
             className="rounded-xl object-cover"
           />
         </div>
-
-        <BookingItem />
-
+        <h2 className="mb-3 mt-6 text-sm text-gray-400">Agendamentos</h2>
+        <div className="flex gap-3 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+          {bookings.map((booking) => (
+            <BookingItem key={booking.id} data={booking} />
+          ))}
+        </div>
         <h2 className="mb-3 mt-6 text-sm text-gray-400">RECOMENDADOS</h2>
 
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">

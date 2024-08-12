@@ -1,3 +1,5 @@
+import { BarberShop } from './barber-shop'
+
 export interface Service {
   id: string
   name: string
@@ -5,4 +7,5 @@ export interface Service {
   imageUrl: string
   price: number
   barbershopId: string
+  baberShop: BarberShop
 }

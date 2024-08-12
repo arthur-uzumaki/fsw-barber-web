@@ -36,8 +36,6 @@ export default async function BarberShopPage({
     searchParams.service,
   )
 
-  console.log(barberShops)
-
   return (
     <div>
       <Header />

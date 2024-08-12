@@ -5,26 +5,26 @@ import Link from 'next/link'
 
 export default function SignIn() {
   return (
-    <main className="grid max-h-[860px] w-full grid-cols-2">
-      <div className="relative">
+    <main className="mt-10 flex w-full flex-col md:grid md:max-h-[860px] md:grid-cols-2">
+      <div className="relative flex justify-center md:justify-start">
         <Image
-          className="absolute left-10 top-10"
+          className="md:absolute md:left-10 md:top-10"
           src={'/logo.png'}
           alt="banner"
-          width={250}
-          height={250}
+          width={150}
+          height={150}
           quality={100}
         />
         <div className="hidden rounded-md lg:-m-10 lg:block lg:h-[900px] lg:w-[900px] lg:bg-zinc-900" />
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-10">
+      <div className="flex flex-col items-center justify-center gap-10 p-5">
         <div className="relative">
-          <h1 className="absolute -top-[325px] right-[200px] text-5xl font-semibold">
+          <h1 className="text-4xl font-semibold md:absolute md:-top-[325px] md:right-[200px] md:text-5xl">
             Login
           </h1>
         </div>
-        <Button variant={'outline'} className="w-1/2 gap-2">
+        <Button variant={'outline'} className="w-full gap-2 md:w-1/2">
           <Image
             alt="Fazer login com google"
             src={'/google.svg'}
