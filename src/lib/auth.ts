@@ -9,13 +9,14 @@ interface User {
   email: string
 }
 
-export function getUser(): User | null {
+export function getUser(): User {
   const token = cookies().get('token')?.value
 
   if (!token) {
-    return null
+    redirect('/sign-in')
   }
 
   const user: User = jwtDecode(token)
+
   return user
 }

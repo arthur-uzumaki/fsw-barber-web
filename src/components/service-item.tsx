@@ -20,8 +20,6 @@ import { toast } from 'sonner'
 import { createBooking } from '@/components/_actions/create-booking'
 import { Booking } from '@/types/booking'
 import { getBookings } from '@/components/_actions/get-bookings'
-import { DialogAuthGoogle } from './dialog-auth-google'
-import { Dialog, DialogContent } from './ui/dialog'
 import Cookies from 'js-cookie'
 
 interface ServiceProps {
@@ -72,7 +70,6 @@ function getTimeList(bookings: Booking[]) {
 }
 
 export function ServiceItem({ data, barberShop }: ServiceProps) {
-  const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
@@ -97,13 +94,11 @@ export function ServiceItem({ data, barberShop }: ServiceProps) {
     fetchBookings()
   }, [selectedDay, data.id])
 
-  function handleBookingClick(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleBookingClick() {
     const token = Cookies.get('token')
     if (token) {
       return setBookingSheetIsOpen(true)
     }
-    setSignInDialogIsOpen(true)
-    return event.stopPropagation()
   }
 
   function handleBookingSheetOpenChange() {
@@ -285,15 +280,6 @@ export function ServiceItem({ data, barberShop }: ServiceProps) {
           </div>
         </CardContent>
       </Card>
-
-      <Dialog
-        open={signInDialogIsOpen}
-        onOpenChange={(open) => setSignInDialogIsOpen(open)}
-      >
-        <DialogContent className="w-11/12">
-          <DialogAuthGoogle />
-        </DialogContent>
-      </Dialog>
     </>
   )
 }
