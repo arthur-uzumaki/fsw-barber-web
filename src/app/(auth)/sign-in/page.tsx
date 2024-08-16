@@ -20,24 +20,30 @@ export default function SignIn() {
 
       <div className="flex flex-col items-center justify-center gap-10 p-5">
         <div className="relative">
-          <h1 className="text-4xl font-semibold md:absolute md:-top-[325px] md:right-[200px] md:text-5xl">
+          <h1 className="text-4xl font-semibold md:absolute md:-top-[329px] md:right-[140px] md:text-3xl">
             Login
           </h1>
         </div>
-        <Button variant={'outline'} className="w-full gap-2 md:w-1/2">
-          <Image
-            alt="Fazer login com google"
-            src={'/google.svg'}
-            width={20}
-            height={20}
-          />
-          <Link
-            className="text-lg font-bold"
-            href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=${env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:3000/api/auth/callback&response_type=code&scope=email%20profile`}
+
+        <div className="md:relative">
+          <Button
+            variant={'outline'}
+            className="-top-28 w-full gap-2 md:absolute md:-right-60 md:w-[500px]"
           >
-            Google
-          </Link>
-        </Button>
+            <Image
+              alt="Fazer login com google"
+              src={'/google.svg'}
+              width={20}
+              height={20}
+            />
+            <Link
+              className="text-lg font-bold"
+              href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=${env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:3000/api/auth/callback&response_type=code&scope=email%20profile`}
+            >
+              Google
+            </Link>
+          </Button>
+        </div>
       </div>
     </main>
   )

@@ -1,5 +1,6 @@
 import { BookingItem } from '@/components/booking-item'
 import { Header } from '@/components/header'
+import { SectionTitle } from '@/components/section-title'
 import { api } from '@/lib/api'
 import { Booking } from '@/types/booking'
 import { Metadata } from 'next'
@@ -40,6 +41,11 @@ export default async function Bookings() {
   const closedBookings: Booking[] = await fetchConcludedBookings()
   const confirmedBookings: Booking[] = await fetchConfirmedBookings()
 
+  const token = cookies().get('token')?.value
+
+  if (!token) {
+    redirect('/sign-in')
+  }
   return (
     <>
       <Header />
@@ -49,10 +55,7 @@ export default async function Bookings() {
 
         {confirmedBookings.length > 0 && (
           <>
-            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-              Confirmados
-            </h2>
-
+            <SectionTitle title="Confirmados" />
             {confirmedBookings.map((booking) => (
               <BookingItem key={booking.id} data={booking} />
             ))}
@@ -61,9 +64,7 @@ export default async function Bookings() {
 
         {closedBookings.length > 0 && (
           <>
-            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-              Finalizados
-            </h2>
+            <SectionTitle title="Finalizados" />
 
             {closedBookings.map((booking) => (
               <BookingItem key={booking.id} data={booking} />

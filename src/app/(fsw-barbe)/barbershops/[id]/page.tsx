@@ -7,8 +7,10 @@ import { Sheet, SheetTrigger } from '@/components/ui/sheet'
 import { api } from '@/lib/api'
 import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from 'lucide-react'
 import { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 interface BarberShopPageProps {
   params: {
@@ -49,6 +51,11 @@ export async function generateStaticParams() {
 
 export default async function BarberShpPage({ params }: BarberShopPageProps) {
   const barbershop: BarberShopItemProps = await getBarbeShopDetails(params.id)
+  const token = cookies().get('token')?.value
+
+  if (!token) {
+    redirect('/sign-in')
+  }
 
   return (
     <main className="">

@@ -3,7 +3,10 @@ import BarberShopItem, {
 } from '@/components/barber-shop-item'
 import { Header } from '@/components/header'
 import Search from '@/components/search'
+import { SectionTitle } from '@/components/section-title'
 import { api } from '@/lib/api'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 interface BarberShopPageProps {
   searchParams: {
@@ -35,7 +38,11 @@ export default async function BarberShopPage({
     searchParams.title,
     searchParams.service,
   )
+  const token = cookies().get('token')?.value
 
+  if (!token) {
+    redirect('/sign-in')
+  }
   return (
     <div>
       <Header />
@@ -43,7 +50,7 @@ export default async function BarberShopPage({
         <Search />
       </div>
       <div className="px-5">
-        <h2 className="up mb-3 mt-6 text-xs font-bold text-zinc-400">
+        <h2 className="mb-3 mt-6 text-xs font-bold text-zinc-400">
           Resultado para &quot;{searchParams?.title || searchParams?.service}
           &quot;
         </h2>

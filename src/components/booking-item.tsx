@@ -19,18 +19,10 @@ import Image from 'next/image'
 import { BookingSummary } from './booking-summary'
 import { PhoneItem } from './phone-item'
 import { Button } from './ui/button'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from './ui/dialog'
-import { deleteBooking } from '@/_actions/delete-booking'
-import { toast } from 'sonner'
+import { Dialog, DialogTrigger } from './ui/dialog'
+
+import { DialogContentBookingDelete } from './dialog-content-booking-delete'
+import { ServiceCard } from './service-card'
 
 interface BookingItemProps {
   data: Booking
@@ -39,47 +31,15 @@ interface BookingItemProps {
 export function BookingItem({ data }: BookingItemProps) {
   const isConfirmed = isFuture(data.date)
 
-  async function handleDeleteBooking() {
-    try {
-      await deleteBooking(data.id)
-      toast.success('Reserva cancelado com sucesso! ')
-    } catch (error) {
-      toast.error('Error ao cancelar a reservar. Tenta de novo')
-    }
-  }
   return (
     <Sheet>
       <SheetTrigger className="w-full">
         <Card className="min-w-[90%]">
-          <CardContent className="flex justify-between p-0">
-            <div className="flex flex-col gap-2 py-5 pl-5">
-              <Badge
-                className="w-fit"
-                variant={isConfirmed ? 'default' : 'secondary'}
-              >
-                {isConfirmed ? 'Confirmado' : 'Finalizado'}
-              </Badge>
-              <h3 className="text-left font-semibold">{data.service.name}</h3>
-              <div className="flex items-center gap-2">
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src={data.barbershop.imageUrl} />
-                </Avatar>
-                <p className="text-sm">{data.barbershop.name}</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center border-l-2 border-solid px-5">
-              <p className="text-sm capitalize">
-                {format(data.date, 'MMMM', { locale: ptBR })}
-              </p>
-              <p className="text-2xl">
-                {format(data.date, 'dd', { locale: ptBR })}
-              </p>
-              <p className="text-sm">
-                {format(data.date, 'HH:mm', { locale: ptBR })}
-              </p>
-            </div>
-          </CardContent>
+          <ServiceCard
+            name={data.barbershop.name}
+            imageUrl={data.barbershop.imageUrl}
+            date={data.date}
+          />
         </Card>
       </SheetTrigger>
 
@@ -124,7 +84,6 @@ export function BookingItem({ data }: BookingItemProps) {
             name={data.barbershop.name}
             price={data.service.price}
             selectedDay={data.date}
-            selectedTime={data.date}
           />
         </div>
 
@@ -147,32 +106,7 @@ export function BookingItem({ data }: BookingItemProps) {
                     Cancelar
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="w-[90%]">
-                  <DialogHeader>
-                    <DialogTitle>Cancelar Reserva</DialogTitle>
-                    <DialogDescription className="text-zinc-500">
-                      Tem certeza que deseja cancelar esse agendamento?
-                    </DialogDescription>
-                  </DialogHeader>
-
-                  <DialogFooter className="flex-row gap-5">
-                    <DialogClose asChild className="">
-                      <Button variant={'outline'} className="w-full">
-                        Voltar
-                      </Button>
-                    </DialogClose>
-                    <DialogClose asChild>
-                      <Button
-                        variant={'destructive'}
-                        className="w-full"
-                        type="button"
-                        onClick={handleDeleteBooking}
-                      >
-                        Confirmar
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
+                <DialogContentBookingDelete id={data.id} />
               </Dialog>
             )}
           </div>

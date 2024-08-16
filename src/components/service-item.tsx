@@ -10,46 +10,24 @@ import {
   SheetHeader,
   SheetTitle,
 } from './ui/sheet'
-import { Calendar } from './ui/calendar'
 
 import { ptBR } from 'date-fns/locale'
 import { useEffect, useMemo, useState } from 'react'
-import { format, isPast, isToday, set } from 'date-fns'
+import { isPast, isToday, set } from 'date-fns'
 import { BarberShopItemProps } from './barber-shop-item'
 import { toast } from 'sonner'
 import { createBooking } from '@/_actions/create-booking'
 import { Booking } from '@/types/booking'
 import { getBookings } from '@/_actions/get-bookings'
 import Cookies from 'js-cookie'
+import { TIME_LIST } from '@/app/_constant/time-list'
+import { BookingSummary } from './booking-summary'
+import { Calendar } from './calendar'
 
 interface ServiceProps {
   data: ServiceBarber
   barberShop: Pick<BarberShopItemProps, 'name'>
 }
-
-const TIME_LIST = [
-  '08:00',
-  '08:30',
-  '09:00',
-  '09:30',
-  '10:00',
-  '10:30',
-  '11:00',
-  '11:30',
-  '12:00',
-  '12:30',
-  '13:00',
-  '13:30',
-  '14:00',
-  '14:30',
-  '15:00',
-  '15:30',
-  '16:00',
-  '16:30',
-  '17:00',
-  '17:30',
-  '18:00',
-]
 
 interface GetTimeListProps {
   bookings: Booking[]
@@ -210,30 +188,6 @@ export function ServiceItem({ data, barberShop }: ServiceProps) {
                       locale={ptBR}
                       selected={selectedDay}
                       onSelect={handleDateSelect}
-                      fromDate={new Date()}
-                      styles={{
-                        head_cell: {
-                          width: '100%',
-                          textTransform: 'capitalize',
-                        },
-                        cell: {
-                          width: '100%',
-                        },
-                        button: {
-                          width: '100%',
-                        },
-                        nav_button_previous: {
-                          width: '32px',
-                          height: '32px',
-                        },
-                        nav_button_next: {
-                          width: '32px',
-                          height: '32px',
-                        },
-                        caption: {
-                          textTransform: 'capitalize',
-                        },
-                      }}
                     />
                   </div>
                   {selectedDay && (
@@ -259,38 +213,11 @@ export function ServiceItem({ data, barberShop }: ServiceProps) {
 
                   {selectedTime && selectedDay && (
                     <div className="p-5">
-                      <Card>
-                        <CardContent className="space-y-3 p-3">
-                          <div className="flex items-center justify-between">
-                            <h2 className="font-bold">{data.name}</h2>
-                            <p className="font-bold">
-                              {Intl.NumberFormat('pt-br', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              }).format(data.price)}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Data</h2>
-                            <p className="font-bold">
-                              {format(selectedDay, "d 'de' MMMM", {
-                                locale: ptBR,
-                              })}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Horário</h2>
-                            <p className="font-bold">{selectedTime}</p>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-sm text-gray-400">Barbearia</h2>
-                            <p className="font-bold">{barberShop.name}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <BookingSummary
+                        selectedDay={selectedDay}
+                        name={data.name}
+                        price={data.price}
+                      />
                     </div>
                   )}
 

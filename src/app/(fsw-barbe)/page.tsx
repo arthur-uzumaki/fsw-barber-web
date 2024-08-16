@@ -16,6 +16,7 @@ import { cookies } from 'next/headers'
 import { Booking } from '@/types/booking'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { SectionTitle } from '@/components/section-title'
 
 async function fetchBarberShops() {
   const barbershops = await api('/barbershops')
@@ -103,7 +104,8 @@ export default async function Home() {
             <BookingItem key={booking.id} data={booking} />
           ))}
         </div>
-        <h2 className="mb-3 mt-6 text-sm text-gray-400">RECOMENDADOS</h2>
+
+        <SectionTitle title="RECOMENDADOS" />
 
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
@@ -111,7 +113,7 @@ export default async function Home() {
           ))}
         </div>
 
-        <h2 className="mb-3 mt-6 text-sm text-gray-400">POPULARES</h2>
+        <SectionTitle title="POPULARES" />
 
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (

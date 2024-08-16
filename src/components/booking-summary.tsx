@@ -5,14 +5,12 @@ interface BookingSummaryProps {
   name: string
   price: number
   selectedDay: Date
-  selectedTime: Date | string
 }
 
 export function BookingSummary({
   name,
   price,
   selectedDay,
-  selectedTime,
 }: BookingSummaryProps) {
   return (
     <Card>
@@ -39,7 +37,7 @@ export function BookingSummary({
         <div className="flex items-center justify-between">
           <h2 className="text-sm text-gray-400">Horário</h2>
           <p className="font-bold">
-            {format(selectedTime, 'HH:mm', { locale: ptBR })}
+            {format(selectedDay, 'HH:mm', { locale: ptBR })}
           </p>
         </div>
 
