@@ -20,3 +20,7 @@
 - primeiro instalar o nodejs versão LTS
 - npm install para instalar todas as dependência
 - npm run dev
+
+## Projeto Back-end
+
+<a href='https://github.com/Arttanjeiro/fsw-barber-server'>back-end</a>
